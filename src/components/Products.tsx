@@ -1,9 +1,7 @@
-import React, { Fragment } from 'react'
-
 const Products = () => {
     return (
-        <Fragment>
-            <h2 className="text-center .my-5">Product List</h2>
+        <>
+            <h2 className="text-center my-5">Product List</h2>
 
             <table className="table table-striped">
                 <thead className="bg-primary table-dark">
@@ -14,10 +12,10 @@ const Products = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                 </tbody>
             </table>
-        </Fragment>
+        </>
     )
 }
 
