@@ -7,21 +7,22 @@ type Product = {
     price: number
 }
 
-const NewProduct = () => {
+const NewProduct = ({ history }) => {
 
     const [name, setName] = useState('')
     const [price, setPrice] = useState(0)
-
     const dispatch = useDispatch()
+
+    const loading = useSelector((state: any) => state.products.loading)
+    const error = useSelector((state: any) => state.products.error)
 
     const addProduct = (product: Product) => dispatch(createNewProductAction(product))
 
-    const submitNewProduct = (e: any) => {
+    const submitNewProduct = (e) => {
         e.preventDefault()
-
         if (name.trim() === '' || price <= 0) return
-
         addProduct({ name, price })
+        history.push('/')
     }
 
     return (
@@ -58,6 +59,8 @@ const NewProduct = () => {
                                 className='btn btn-primary font-weight-bold text-uppercase d-block w-100'
                             >Add</button>
                         </form>
+                        {loading ? <p>Loading...</p> : null}
+                        {error ? <p className='alert alert-danger p2 mt-4 text-center'>An error happened</p> : null}
                     </div>
                 </div>
             </div>

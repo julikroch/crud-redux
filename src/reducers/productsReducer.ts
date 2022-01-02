@@ -10,7 +10,7 @@ type initialStateT = {
     loading: boolean
 }
 
-const initialState: initialStateT = {
+export const initialState: initialStateT = {
     products: [],
     error: null,
     loading: false
@@ -18,7 +18,23 @@ const initialState: initialStateT = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-
+        case ADD_PRODUCT:
+            return {
+                ...state,
+                loading: action.payload
+            }
+        case ADD_PRODUCT_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                products: [...state.products, action.payload]
+            }
+        case ADD_PRODUCT_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
         default:
             return state
     }
