@@ -1,7 +1,13 @@
 import {
     ADD_PRODUCT,
     ADD_PRODUCT_SUCCESS,
-    ADD_PRODUCT_FAIL
+    ADD_PRODUCT_FAIL,
+    SHOW_PRODUCTS,
+    SHOW_PRODUCTS_SUCCESS,
+    SHOW_PRODUCTS_ERROR,
+    GET_PRODUCT_DELETE,
+    DELETED_PRODUCT_SUCCESS,
+    DELETED_PRODUCT_ERROR
 } from '../types/index'
 import axiosClient from '../config/axios'
 import Swal from 'sweetalert2'
@@ -18,7 +24,7 @@ export function createNewProductAction(product) {
                 'success'
             )
         } catch (error) {
-            console.log({error})
+            console.log({ error })
             dispatch(addProductFailed(product))
             Swal.fire({
                 icon: error,
@@ -42,4 +48,44 @@ const addProductSuccess = product => ({
 const addProductFailed = state => ({
     type: ADD_PRODUCT_FAIL,
     payload: state
+})
+
+export function showProducts() {
+    return async (dispatch) => {
+        dispatch(downloadProducts())
+        try {
+            setTimeout(async () => {
+                const response = await axiosClient.get('/products')
+                dispatch(downloadProductsSuccess(response.data))
+            }, 2500);
+        } catch (error) {
+            dispatch(downloadProductsFailed())
+        }
+    }
+}
+
+const downloadProducts = () => ({
+    type: SHOW_PRODUCTS,
+    payload: true
+})
+
+const downloadProductsSuccess = products => ({
+    type: SHOW_PRODUCTS_SUCCESS,
+    payload: products
+})
+
+const downloadProductsFailed = () => ({
+    type: SHOW_PRODUCTS_ERROR,
+    payload: true
+})
+
+export function deleteProductAction(id) {
+    return async (dispatch) => {
+        dispatch(getDeletedProduct(id))
+    }
+}
+
+export const getDeletedProduct = (id) => ({
+    type: GET_PRODUCT_DELETE,
+    payload: id
 })

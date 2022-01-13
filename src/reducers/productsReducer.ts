@@ -1,19 +1,27 @@
 import {
     ADD_PRODUCT,
     ADD_PRODUCT_SUCCESS,
-    ADD_PRODUCT_FAIL
+    ADD_PRODUCT_FAIL,
+    SHOW_PRODUCTS,
+    SHOW_PRODUCTS_SUCCESS,
+    SHOW_PRODUCTS_ERROR,
+    GET_PRODUCT_DELETE,
+    DELETED_PRODUCT_SUCCESS,
+    DELETED_PRODUCT_ERROR
 } from '../types/index'
 
 type initialStateT = {
     products: string[]
     error: null
     loading: boolean
+    productToDelete: null
 }
 
 export const initialState: initialStateT = {
     products: [],
     error: null,
-    loading: false
+    loading: false,
+    productToDelete: null
 }
 
 export default function (state = initialState, action) {
@@ -34,6 +42,29 @@ export default function (state = initialState, action) {
                 ...state,
                 loading: false,
                 error: action.payload
+            }
+        case SHOW_PRODUCTS:
+            return {
+                ...state,
+                loading: action.payload
+            }
+        case SHOW_PRODUCTS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: null,
+                products: action.payload
+            }
+        case SHOW_PRODUCTS_ERROR:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+        case GET_PRODUCT_DELETE:
+            return {
+                ...state,
+                productToDelete: action.payload
             }
         default:
             return state

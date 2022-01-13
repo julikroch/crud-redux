@@ -1,5 +1,3 @@
-import React from 'react'
-
 const EditProduct = () => {
     return (
         <div className="row justify-content-center">
@@ -24,7 +22,6 @@ const EditProduct = () => {
                                     name='price'
                                 />
                             </div>
-
                             <button
                                 type='submit'
                                 className='btn btn-primary font-weight-bold text-uppercase d-block w-100'
