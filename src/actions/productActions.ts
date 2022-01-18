@@ -82,10 +82,32 @@ const downloadProductsFailed = () => ({
 export function deleteProductAction(id) {
     return async (dispatch) => {
         dispatch(getDeletedProduct(id))
+
+        try {
+            await axiosClient.delete(`/products/${id}`)
+            dispatch(deleteProductSuccessfully())
+            Swal.fire(
+                'Deleted!',
+                'Your product has been deleted.',
+                'success'
+            )
+        } catch (error) {
+            console.log(error)
+            dispatch(deleteProductError())
+        }
     }
 }
 
-export const getDeletedProduct = (id) => ({
+const getDeletedProduct = (id) => ({
     type: GET_PRODUCT_DELETE,
     payload: id
+})
+
+const deleteProductSuccessfully = () => ({
+    type: DELETED_PRODUCT_SUCCESS
+})
+
+const deleteProductError = () => ({
+    type: DELETED_PRODUCT_ERROR,
+    payload: true
 })
