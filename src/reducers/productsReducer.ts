@@ -7,7 +7,8 @@ import {
     SHOW_PRODUCTS_ERROR,
     GET_PRODUCT_DELETE,
     DELETED_PRODUCT_SUCCESS,
-    DELETED_PRODUCT_ERROR
+    DELETED_PRODUCT_ERROR,
+    GET_PRODUCT_EDIT
 } from '../types/index'
 
 type initialStateT = {
@@ -15,13 +16,15 @@ type initialStateT = {
     error: null
     loading: boolean
     productToDelete: null
+    productToEdit: null
 }
 
 export const initialState: initialStateT = {
     products: [],
     error: null,
     loading: false,
-    productToDelete: null
+    productToDelete: null,
+    productToEdit: null
 }
 
 export default function (state = initialState, action) {
@@ -67,6 +70,11 @@ export default function (state = initialState, action) {
                 ...state,
                 products: state.products.filter((product: any) => product.id !== state.productToDelete),
                 productToDelete: null
+            }
+        case GET_PRODUCT_EDIT:
+            return {
+                ...state,
+                productEdit: action.payload
             }
         default:
             return state

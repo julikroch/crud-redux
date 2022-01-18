@@ -1,3 +1,5 @@
+import { useDispatch, useSelector } from "react-redux"
+
 const EditProduct = () => {
     return (
         <div className="row justify-content-center">
