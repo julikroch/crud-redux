@@ -10,7 +10,8 @@ import {
     DELETED_PRODUCT_ERROR,
     EDITED_PRODUCT_ERROR,
     EDITED_PRODUCT_SUCCESS,
-    GET_PRODUCT_EDIT
+    GET_PRODUCT_EDIT,
+    START_PRODUCT_EDITION
 } from '../types/index'
 import axiosClient from '../config/axios'
 import Swal from 'sweetalert2'
@@ -62,6 +63,7 @@ export function showProducts() {
                 dispatch(downloadProductsSuccess(response.data))
             }, 2500);
         } catch (error) {
+            console.log(error)
             dispatch(downloadProductsFailed())
         }
     }
@@ -85,7 +87,6 @@ const downloadProductsFailed = () => ({
 export function deleteProductAction(id) {
     return async (dispatch) => {
         dispatch(getDeletedProduct(id))
-
         try {
             await axiosClient.delete(`/products/${id}`)
             dispatch(deleteProductSuccessfully())
@@ -101,7 +102,7 @@ export function deleteProductAction(id) {
     }
 }
 
-const getDeletedProduct = (id) => ({
+const getDeletedProduct = (id: number) => ({
     type: GET_PRODUCT_DELETE,
     payload: id
 })
@@ -115,13 +116,40 @@ const deleteProductError = () => ({
     payload: true
 })
 
-export function getProductToEdit(product) {
+export function getProductToEdit(product: any) {
     return (dispatch) => {
         dispatch(getProductEditAction(product))
     }
 }
 
-const getProductEditAction = product => ({
+const getProductEditAction = (product: any) => ({
     type: GET_PRODUCT_EDIT,
     payload: product
+})
+
+export function editProductAction(product: any) {
+    return async (dispatch) => {
+        dispatch(editProduct())
+
+        try {
+            await axiosClient.put(`/products/${product.id}`, product)
+            dispatch(editProductSuccess(product))
+        } catch (error) {
+            dispatch(editProductError())
+        }
+    }
+}
+
+const editProduct = () => ({
+    type: START_PRODUCT_EDITION
+})
+
+const editProductSuccess = (product: any) => ({
+    type: EDITED_PRODUCT_SUCCESS,
+    payload: product
+})
+
+const editProductError = () => ({
+    type: EDITED_PRODUCT_ERROR,
+    payload: true
 })

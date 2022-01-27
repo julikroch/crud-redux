@@ -8,7 +8,9 @@ import {
     GET_PRODUCT_DELETE,
     DELETED_PRODUCT_SUCCESS,
     DELETED_PRODUCT_ERROR,
-    GET_PRODUCT_EDIT
+    GET_PRODUCT_EDIT,
+    EDITED_PRODUCT_SUCCESS,
+    EDITED_PRODUCT_ERROR
 } from '../types/index'
 
 type initialStateT = {
@@ -43,6 +45,7 @@ export default function (state = initialState, action) {
         case ADD_PRODUCT_FAIL:
         case DELETED_PRODUCT_ERROR:
         case SHOW_PRODUCTS_ERROR:
+        case EDITED_PRODUCT_ERROR:
             return {
                 ...state,
                 loading: false,
@@ -74,7 +77,13 @@ export default function (state = initialState, action) {
         case GET_PRODUCT_EDIT:
             return {
                 ...state,
-                productEdit: action.payload
+                productToEdit: action.payload
+            }
+        case EDITED_PRODUCT_SUCCESS:
+            return {
+                ...state,
+                productToEdit: null,
+                products: state.products.map((product: any) => product.id === action.payload.id ? product = action.payload : product)
             }
         default:
             return state
