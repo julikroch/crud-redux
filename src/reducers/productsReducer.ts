@@ -29,7 +29,7 @@ export const initialState: initialStateT = {
     productToEdit: null
 }
 
-export default function (state = initialState, action) {
+export default function (state = initialState, action: any) {
     switch (action.type) {
         case ADD_PRODUCT:
             return {

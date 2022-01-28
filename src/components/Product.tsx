@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { deleteProductAction, getProductToEdit } from '../actions/productActions'
 
@@ -9,7 +9,7 @@ const Product = ({ product }) => {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const deleteProductConfirmation = id => {
+    const deleteProductConfirmation = (id: number) => {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",

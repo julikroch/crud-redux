@@ -28,7 +28,7 @@ export function createNewProductAction(product) {
                 'success'
             )
         } catch (error) {
-            console.log({ error })
+            console.log(error)
             dispatch(addProductFailed(product))
             Swal.fire({
                 icon: error,
@@ -55,7 +55,7 @@ const addProductFailed = state => ({
 })
 
 export function showProducts() {
-    return async (dispatch) => {
+    return async (dispatch: any) => {
         dispatch(downloadProducts())
         try {
             setTimeout(async () => {
@@ -84,8 +84,8 @@ const downloadProductsFailed = () => ({
     payload: true
 })
 
-export function deleteProductAction(id) {
-    return async (dispatch) => {
+export function deleteProductAction(id: number) {
+    return async (dispatch: any) => {
         dispatch(getDeletedProduct(id))
         try {
             await axiosClient.delete(`/products/${id}`)
@@ -128,9 +128,8 @@ const getProductEditAction = (product: any) => ({
 })
 
 export function editProductAction(product: any) {
-    return async (dispatch) => {
+    return async (dispatch: any) => {
         dispatch(editProduct())
-
         try {
             await axiosClient.put(`/products/${product.id}`, product)
             dispatch(editProductSuccess(product))
